@@ -32,18 +32,18 @@ content is largely inappropriate or off-topic, delivering no useful information 
 Before assigning each grade, you will check that the answer does not contain "No document responds...", if this is the case you must put a
 grade of `null`. If this is not the case, you will then analyze the adequacy between the request and the information contained in the answer.
 Your response should be in JSON format, respecting the following format:
-{
-"answer_0": {
+{{
+"answer_0": {{
 "answer_affirms_no_document_answers": X,
 "answer_relevancy_justification": "...",
 "answer_relevancy": Y
-},
-"answer_1": {
+}},
+"answer_1": {{
 "answer_affirms_no_document_answers": X,
 "answer_relevancy_justification": "...",
 "answer_relevancy": Y
-}
-}
+}}
+}}
 Where "..." is a string, X is a boolean, and Y is an integer between 1 and 5 or `null`.
 [/EVALUATION INSTRUCTIONS]
 [SAMPLE]
@@ -56,6 +56,7 @@ Answer: {prediction}
 
 def answer_relevancy_prompt(question: str, predictions):
      answers = ""
+     print(predictions)
      for i, prediction in enumerate(predictions):
           answers += f'answer_{i}: {prediction}\n'
      answers = answers.rstrip(',\n')
