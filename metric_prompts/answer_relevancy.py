@@ -6,7 +6,7 @@ the reference of the source passage, in the format [i] where i is the number of 
 begin with "No document seems to precisely answer your question" and may be supplemented with related sourced information.
 [/TASK]
 [EVALUATION INSTRUCTIONS]
-I will provide you with two answers, numbered 1 and 2, each containing a response to the user request.
+I will provide you with one or several answers, each containing a response to the user request.
 I want you to assign to each answer a relevancy grade between 1 and 5:
 - Answer relevancy evaluates if the content of the answer accurately responds to the user's question.
 - The truthfulness of the information in the answer does not impact relevancy: even if information that appears false is contained in the
@@ -33,12 +33,12 @@ Before assigning each grade, you will check that the answer does not contain "No
 grade of `null`. If this is not the case, you will then analyze the adequacy between the request and the information contained in the answer.
 Your response should be in JSON format, respecting the following format:
 {
-"answer_1": {
+"answer_0": {
 "answer_affirms_no_document_answers": X,
 "answer_relevancy_justification": "...",
 "answer_relevancy": Y
 },
-"answer_2": {
+"answer_1": {
 "answer_affirms_no_document_answers": X,
 "answer_relevancy_justification": "...",
 "answer_relevancy": Y
@@ -54,5 +54,9 @@ Answer: {prediction}
 [/TO EVALUATE]
 """
 
-def answer_relevancy_prompt(question: str, prediction: str):
-     return template.format(input=question, prediction=prediction)
+def answer_relevancy_prompt(question: str, predictions):
+     answers = ""
+     for i, prediction in enumerate(predictions):
+          answers += f'answer_{i}: {prediction}\n'
+     answers = answers.rstrip(',\n')
+     return template.format(input=question, prediction=answers)
