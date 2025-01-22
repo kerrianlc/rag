@@ -60,4 +60,4 @@ def answer_relevancy_prompt(question: str, predictions):
      for i, prediction in enumerate(predictions):
           answers += f'answer_{i}: {prediction}\n'
      answers = answers.rstrip(',\n')
-     return template.format(input=question, prediction=answers)
+     return template.format(question=question, prediction=answers)
