@@ -17,8 +17,7 @@ the adequacy between the information in the answer and the request, NOT their tr
 - Answer relevancy cannot be evaluated if the answer mentions that no document responds to the user request, it is then `null`, regardless of
 whether it contains other information or not.
 Rating scale:
-null - The answer asserts that no document precisely responds to the user request. Even if it provides additional \
-information, whether appropriate or not, the relevancy remains `null`.
+null -  `null`.
 5 - The answer has excellent relevancy. All information provided in the answer is in line with the question \
 and precisely answers the user request.
 4 - The answer achieves good relevancy by providing relevant information to answer the user \
@@ -28,7 +27,10 @@ but it also contains superfluous information, which was not necessary to answer 
 2 - The answer shows low relevancy, with some elements related to the request, but the majority of \
 the content is not in line with the question asked.
 1 - The answer has very low relevancy, not answering the user's question at all. The \
-content is largely inappropriate or off-topic, delivering no useful information for the request.
+content is largely inappropriate or off-topic, delivering no useful information for the request. \
+The answer asserts that no document precisely responds to the user request. Even if it provides 
+additional information, whether appropriate or not, the relevancy remains 1.
+
 Before assigning each grade, you will check that the answer does not contain "No document responds...", if this is the case you must put a
 grade of `null`. If this is not the case, you will then analyze the adequacy between the request and the information contained in the answer.
 Your response should be in JSON format, respecting the following format:
@@ -44,7 +46,8 @@ Your response should be in JSON format, respecting the following format:
 "answer_relevancy": Y
 }}
 }}
-Where "..." is a string, X is a boolean, and Y is an integer between 1 and 5 or `null`.
+Where "..." is a string, X is a boolean, and Y is an integer between 1 and 5.
+special characters that could broke the format. Use \" if you want to quote something inside strings
 [/EVALUATION INSTRUCTIONS]
 [SAMPLE]
 User request: {question}
@@ -56,7 +59,6 @@ Answer: {prediction}
 
 def answer_relevancy_prompt(question: str, predictions):
      answers = ""
-     print(predictions)
      for i, prediction in enumerate(predictions):
           answers += f'answer_{i}: {prediction}\n'
      answers = answers.rstrip(',\n')

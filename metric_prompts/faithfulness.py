@@ -54,7 +54,10 @@ modify the content of the references. Your response should be in JSON format, re
 "faithfulness": Y
 }}
 }}
-Where "..." is a string, X is a boolean, and Y is either a boolean or `null
+Where "..." is a string, X is a boolean, and Y is either a boolean. 
+Return the json object in one line and add neither line breaks nor 
+special characters that could broke the format. Use \" if you want to quote something inside strings.
+
 [/EVALUATION INSTRUCTIONS]
 [SAMPLE]
 Input: {input}
